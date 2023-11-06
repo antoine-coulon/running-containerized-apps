@@ -1,4 +1,4 @@
-Originally published on [my dev.to](https://dev.to/antoinecoulon).
+Originally published on [my dev.to](https://dev.to/antoinecoulon/avoid-this-when-running-containerized-applications-in-production-562k).
 
 Let's talk about things we **must manage when running containerized applications** and how this relates to proper management of **termination signals**.
 
