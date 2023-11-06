@@ -1,13 +1,10 @@
 # This Exec form will run the Node.js process as PID 1.
 # This means that the Node.js process will receive signals from the Docker daemon.
 
-FROM ubuntu:20.04
-
-RUN apt-get update && \
-    apt-get install -y nodejs
+FROM node:18-alpine
 
 WORKDIR /app
 
-COPY index.js .
+COPY . .
 
 ENTRYPOINT ["node", "index.js"]

@@ -1,5 +1,3 @@
-import { setTimeout } from "node:timers/promises";
-
 console.log(`Running on PID ${process.pid}`);
 
 // Just to keep the process alive
@@ -8,10 +6,13 @@ const timerId = setInterval(() => {
 }, 10_000);
 
 // Be sure that this never throws otherwise the process will exit
-async function cleanup() {
+function cleanup(finalize) {
   console.log("Start cleanup");
-  await setTimeout(1000);
-  clearInterval(timerId);
+  
+  setTimeout(() => {
+    clearInterval(timerId);
+    finalize();
+  }, 1000);
 }
 
 process.on("SIGTERM", () => {
@@ -21,7 +22,7 @@ process.on("SIGTERM", () => {
   process.exitCode = 143;
 
   // Do whatever async stuff you need to do before exiting
-  cleanup().finally(() => {
+  cleanup(() => {
     // Since our cleanup function gets rid of all running resources,
     // Node.js will exit automatically after that.
     console.log("Exiting now that all resources have been cleaned up");

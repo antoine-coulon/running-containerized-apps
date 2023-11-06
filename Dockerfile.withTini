@@ -10,6 +10,6 @@ RUN apk add --no-cache tini
 
 WORKDIR /app
 
-COPY index.js .
+COPY . .
 
 ENTRYPOINT ["/sbin/tini", "--", "node", "index.js"]
