@@ -6,13 +6,17 @@ Please start by reading [BEST-PRACTICES.md](./BEST-PRACTICES.md) which summarize
 
 Originally published on [my dev.to](https://dev.to/antoinecoulon).
 
-## Run samples
+## Node.js
+
+All the current examples are using [Node.js](https://github.com/nodejs) but keep in mind that they are valid for most platforms running code.
+
+If anyone is interested in providing other examples for the JVM, Python, Go, Rust... Feel free to submit PRs :) 
 
 To follow the article with examples, you can use the three provided Dockerfile.
 
 - `Docker` needs to be up and running on the host machine.
 
-- Use `./docker-build.sh` to build the three images: `node-shell-form`, `node-exec-form`, `node-with-tini`.
+- Use `./nodejs/docker-build.sh` to build the three images: `node-shell-form`, `node-exec-form`, `node-with-tini`.
 
 - Then just `docker run <image>`.
 
