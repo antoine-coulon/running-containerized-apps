@@ -1,0 +1,10 @@
+# This Exec form will run the Node.js process as PID 1.
+# This means that the Node.js process will receive signals from the Docker daemon.
+
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY . .
+
+ENTRYPOINT ["node", "index.js"]

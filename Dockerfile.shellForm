@@ -1,0 +1,19 @@
+# This Shell form will run the Node.js process within a subshell.
+# Shell will own the process "init" / PID 1. 
+# This means that the Node.js process will not receive signals from the Docker daemon.
+# Note that we voluntarily don't use official Docker images for Node.js as they all
+# use the Exec form and we want to demonstrate the difference between the two forms
+# so we use a raw setup from Ubuntu and from a deprecated version of Node.js (still valid for the example). 
+
+FROM ubuntu:22.04
+
+RUN apt-get update && \
+    apt-get install -y nodejs
+
+WORKDIR /app
+
+RUN node -v
+
+COPY . .
+
+ENTRYPOINT node index.js
