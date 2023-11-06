@@ -1,3 +1,5 @@
+Originally published on [my dev.to](https://dev.to/antoinecoulon).
+
 Let's talk about things we **must manage when running containerized applications** and how this relates to proper management of **termination signals**.
 
 Before specifically talking about containers, let's put them aside and see how we run applications on a daily basis. We all use various operating systems that can run huge amount of tasks. These tasks are executed within **processes**, one of the fundamental units of an operating system. 

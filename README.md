@@ -2,9 +2,7 @@
 
 ## Running containerized applications
 
-Please start by reading [BEST-PRACTICES.md](./BEST-PRACTICES.md) which summarizes some of the core principles to respect when running containerized applications.
-
-Originally published on [my dev.to](https://dev.to/antoinecoulon).
+**Please start by reading [BEST-PRACTICES.md](./BEST-PRACTICES.md) which summarizes some of the core principles to respect when running containerized applications.**
 
 ## Node.js
 
