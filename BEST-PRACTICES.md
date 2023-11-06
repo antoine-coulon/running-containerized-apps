@@ -1,5 +1,3 @@
-Hello everyone!
-
 Let's talk about things we **must manage when running containerized applications** and how this relates to proper management of **termination signals**.
 
 Before specifically talking about containers, let's put them aside and see how we run applications on a daily basis. We all use various operating systems that can run huge amount of tasks. These tasks are executed within **processes**, one of the fundamental units of an operating system. 
@@ -130,10 +128,14 @@ Usually, when your application properly manages terminal signal, it's already a 
 
 Let's take a very simple example with Docker containers, where a `Dockerfile` specifies an **ENTRYPOINT** such that it spawns a shell process as the PID1, known as the **shell form** of the **ENTRYPOINT** command.
 
+**Please don't use the following Dockerfile for shipping Node.js applications in production. This is a simplified example that will pull a deprecated Node.js version (v12) that only suits for educative purposes.**
+
+You can test all the examples that will follow on your own using [the repository I created](https://github.com/antoine-coulon/running-containerized-apps)
+
 `Dockerfile`
 
 ```Dockerfile
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 RUN apt-get update && \
     apt-get install -y nodejs
@@ -141,7 +143,7 @@ RUN apt-get update && \
 ENTRYPOINT node index.js
 ```
 
-> Building your own Node.js image is discouraged, here we build it from Ubuntu for educative purposes.
+> Building your own Node.js image is discouraged, here we build it from Ubuntu for educative purposes. Please rely on official images for production.
 
 This will result in two processes in the container, shell being the parent one and the Node.js application being a child process of the shell (subshell). The consequence is that **shell** does not propagate termination signals correctly, meaning that the Node.js process will never receive these signals.
 
@@ -160,7 +162,7 @@ One way to circumvent that is to avoid shell to be PID1 and turn the application
 
 `Dockerfile`
 ```Dockerfile
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 RUN apt-get update && \
     apt-get install -y nodejs
@@ -180,7 +182,7 @@ Because our application follows the good practices we talked about in the first 
 
 ## Don't let your application process be PID1
 
-he good part of having our application process being the only process in the container and given that our application has setup the expected process handlers is that we are able to properly manage termination signals.
+The good part of having our application process being the only process in the container and given that our application has setup the expected process handlers is that we are able to properly manage termination signals.
 
 Nonetheless, we have a new problem, which is that our application now is the PID1 also known as init process.
 
@@ -208,7 +210,7 @@ There are a lot of solutions out there but Tini is the most famous and battle-te
 
 Tini has one goal, which is to provide an “init” process that works as expected. It is an independent executable, but it is important to mention that it is embedded by default in Docker since v1.13, usable with `docker run --init` or with docker-compose (v2.2) using `init: true` from the config file for a service.
 
-Still in the context of a Node.js application, here is an example of a minimalist but safe Dockerfile using Tini:
+Still in the context of a Node.js application, here is an example of a minimalist but closer to production-ready Dockerfile using Tini:
 
 ```Dockerfile
 FROM node:18-alpine

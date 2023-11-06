@@ -1,3 +1,5 @@
+<img src="https://github.com/antoine-coulon/running-containerized-apps/assets/43391199/2ba88460-572d-4043-9c24-3310158b8324">
+
 ## Running containerized applications
 
 Please start by reading [BEST-PRACTICES.md](./BEST-PRACTICES.md) which summarizes some of the core principles to respect when running containerized applications.
@@ -21,7 +23,7 @@ To follow the article with examples, you can use the three provided Dockerfile.
 3. In the container shell, run `ps aux`
 4. Observe `/bin/sh` being PID1
 5. Run `docker stop <node-shell-form-container-id>`
-6. Observe the Node.js script not receiving the SIGTERM signal hence keeping running 
+6. Observe the Node.js script not receiving the SIGTERM signal hence keeping running until Docker sends SIGKILL after 10 seconds.
 
 ### `node-exec-form`
 
