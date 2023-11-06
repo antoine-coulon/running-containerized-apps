@@ -1,0 +1,15 @@
+# This Exec form will run the Tini process as the PID1.
+# This means that the Node.js process will receive signals from the Docker daemon.
+# This also means that everything running in the container will be a child of Tini
+# and will be correctly managed in case in orphans/zombies voluntarily or involuntarily
+# created by the Node.js process.
+
+FROM node:18-alpine
+
+RUN apk add --no-cache tini
+
+WORKDIR /app
+
+COPY index.js .
+
+ENTRYPOINT ["/sbin/tini", "--", "node", "index.js"]
